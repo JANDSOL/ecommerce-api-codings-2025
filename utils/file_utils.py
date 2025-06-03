@@ -26,6 +26,6 @@ def save_image(file: UploadFile, folder: str = "") -> str:
     return file_path.replace(os.sep, "/")
 
 
-def delete_image(file_path: str) -> None:
+def delete_file(file_path: str) -> None:
     if os.path.exists(file_path):
         os.remove(file_path)
