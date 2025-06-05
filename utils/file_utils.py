@@ -23,7 +23,7 @@ def save_image(file: UploadFile, folder: str = "") -> str:
     with open(file=file_path, mode="wb") as buffer:
         shutil.copyfileobj(fsrc=file.file, fdst=buffer)
 
-    return file_path.replace(os.sep, "/")
+    return '/' + file_path.replace(os.sep, "/")
 
 
 def delete_file(file_path: str) -> None:

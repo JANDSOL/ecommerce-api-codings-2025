@@ -29,6 +29,8 @@ class ProductService:
         image_file: UploadFile,
     ) -> Product:
         # Guardar la img en el servidor
+        if image_file.size == 0:
+            raise ValueError("Ingresa una imagen correcta")
         image_path = save_image(file=image_file, folder=FOLDER_NAME_IMG_UPLOAD)
         new_product = Product(
             title=title,
