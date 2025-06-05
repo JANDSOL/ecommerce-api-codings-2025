@@ -33,12 +33,12 @@ def get_service(session: SessionDep):
     status_code=status.HTTP_201_CREATED,
 )
 async def create_product(
-    title: str = Form(...),
-    seller_full_name: str = Form(...),
-    price: Decimal = Form(...),
-    rating: float = Form(...),
-    image: UploadFile = File(...),
-    service: ProductService = Depends(get_service),
+    title: Annotated[str, Form()],
+    image: UploadFile,
+    seller_full_name: Annotated[str, Form()],
+    price: Annotated[Decimal, Form(ge=0, max_digits=6, decimal_places=2)],
+    rating: Annotated[float, Form(ge=0, le=5)],
+    service: Annotated[ProductService, Depends(get_service)],
 ):
     """Create a product with form data and image file."""
     try:
@@ -49,11 +49,12 @@ async def create_product(
             rating,
             image,
         )
-        logger.info(f"Product created: {product.id}")
+        logger.info("Product created: %s", product.id)
         return product
     except Exception as e:
-        logger.error(f"Error while creating a product: {e}")
+        logger.error("Error while creating a product: %s", e)
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="¡Ha ocurrido un error al intentar guardar un producto, vuelve a intentarlo!",
-        )
+        ) from e
+
