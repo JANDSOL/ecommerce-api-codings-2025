@@ -1,6 +1,7 @@
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 
 from db import create_db_and_table
@@ -39,3 +40,12 @@ app.include_router(
     prefix=f"/api/{V1}",
     tags=[f"{PRODUCTS_NAME_PATH.title()} {V1.upper()}"],
 )
+
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    logger.critical("Unhandled error: %s", exc)
+    return JSONResponse(
+        status_code=500,
+        content={"detail": "Error interno del servidor. Por favor, intente de nuevo."},
+    )

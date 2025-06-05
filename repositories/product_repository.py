@@ -17,7 +17,8 @@ class ProductRepository:
             st_product = st_product.where(
                 func.lower(Product.title).like(f"%{title_filter.lower()}%")
             )
-        st_product = st_product.offset(page).limit(limit_per_page)
+        offset = page * limit_per_page
+        st_product = st_product.offset(offset).limit(limit_per_page)
         results = self.session.exec(st_product)
 
         return list(results)
