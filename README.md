@@ -18,7 +18,7 @@ Bienvenido a la API RESTful para la gestión de un e-commerce, desarrollada con 
 
 ```bash
 git clone <URL_DEL_REPOSITORIO>
-cd ecommerce-backend
+cd ecommerce-api-codings-2025
 ```
 
 ### 2. 🌐 Crea un entorno virtual
