@@ -1,5 +1,6 @@
 from contextlib import asynccontextmanager
 
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
@@ -27,6 +28,18 @@ app = FastAPI(
 
 app.mount(
     path=f"/{UPLOAD_ROOT}", app=StaticFiles(directory=UPLOAD_ROOT), name=UPLOAD_ROOT
+)
+
+origins = [
+    "http://localhost:3000",  # frontend local
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,            # Dominios permitidos
+    allow_credentials=True,           # Permite envío de cookies/autenticación
+    allow_methods=["*"],              # Permite todos los métodos (GET, POST, etc.)
+    allow_headers=["*"],              # Permite todos los headers
 )
 
 
