@@ -31,7 +31,8 @@ app.mount(
 )
 
 origins = [
-    "http://localhost:3000",  # frontend local
+    "http://localhost:3000",  # frontend local react
+    "https://practica-react-codign-academy.vercel.app" # frontend production react
 ]
 
 app.add_middleware(
